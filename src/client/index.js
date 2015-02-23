@@ -114,10 +114,16 @@ if(Meteor.isClient){
 
 	Handlebars.registerHelper('linkify',  function(text){
 		var linkedText = Autolinker.link(text, {stripPrefix: false});
-		var url = /<a\b[^>]*>(.*?)<\/a>/;
-		var x = linkedText.match(url);
-		console.log(x);
-		return new Handlebars.SafeString(linkedText);
+		var url = new RegExp(/<a\b[^>]*>(.*?)<\/a>/g);
+		var str = Handlebars._escape("");
+		while(match = url.exec(linkedText)){
+			str += Handlebars._escape(linkedText.substring(0, match.index));
+			str += linkedText.substring(match.index, match.index+match[0].length);
+			linkedText = linkedText.substring(match.index+match[0].length);
+			url.lastIndex = 0;
+		}
+		str += Handlebars._escape(linkedText);
+		return new Handlebars.SafeString(str);
 	});
 
 	function randomString(num) {
