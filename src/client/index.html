@@ -1,0 +1,89 @@
+<!--@DarionCassel-->
+<head>
+  <title>noteboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' www.google-analytics.com ajax.googleapis.com;">
+  <link rel="icon" href="/img/favicon.png?v=2"/>
+</head>
+
+<body>
+</body>
+
+<template name="ApplicationLayout">
+  <div class="jumbotron">
+    <h2>noteboard</h2>
+  </div>
+  <article>
+    <div class="container">
+      <div class="container-narrow">
+        {{> yield}}
+      </div>
+    </div>
+  </article>
+  <footer>
+    {{> yield "footer"}}
+  </footer>
+</template>
+
+<template name="login">
+  <!--new code-->
+  <a style="display:none" class="initPop" id="init1" rel="group1" href="#data"></a>
+  <a style="display:none" class="initPop" rel="group1" href="#data1"></a>
+  <a style="display:none" class="initPop" rel="group1" href="#data2"></a>
+  <div style="display:none">
+    <div class="welcome" id="data">
+      <p>Welcome to noteboard!</p>
+    </div>
+    <div class="welcome" id="data1">
+      <p>Chat with people nearby</p>
+    </div>
+    <div class="welcome" id="data2">
+      <p>We'll need to know your location</p>
+      <button style="margin-top: 0px;" class="btn btn-info" id="closeWelcome">Ok</button>
+    </div>
+  </div>
+  <!--end new-->
+  <div id="login">
+    <button id="loginBtn" name="login" class="btn btn-info">Join</button>
+  </div>
+</template>
+
+<template name="main">
+  <div class="row-fluid marketing">
+		<div class="span12" id="notesdata">
+			{{#each notes}}
+				{{> note}}
+			{{/each}}
+		</div>
+	</div>
+</template>
+
+<template name="note">
+	<div class="note">
+    <div class="noteLabel" style="color:{{color}};background-color:{{color}};">
+      <span>-</span>
+    </div>
+		<p><span class="noteText">      {{linkify text}}</span></p>
+	</div>
+  <div class="noteAge">
+    <p style="font-size:10px;text-align:right;">{{age}} min ago</p>
+  </div>
+</template>
+
+<template name="footer">
+  <div class="users">
+    {{#each users}}
+      {{> user}}
+    {{/each}}
+  </div>
+  <div class="footer">
+    <input type="text" maxlength="140" placeholder="type your note here" autofocus="autofocus" id="noteInput">
+      <a class="btn btn-large" href="#" id="add">Send</a>
+  </div>
+</template>
+
+<template name="user">
+  <div id="userLabel" style="color:{{profile.color}};background-color:{{profile.color}};">
+    <span>-</span>
+  </div>
+</template>

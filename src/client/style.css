@@ -1,0 +1,166 @@
+body {
+	background-color: rgba(0,0,0,0.07);
+}
+
+.container-narrow {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+
+.jumbotron {
+	position: relative;
+	text-align: center;
+	padding: 5px 0 5px 0;
+	background-color: #fff;
+	box-shadow: 0 1px rgba(0,0,0,0.07);
+}
+
+.jumbotron > h2 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+#add {
+	color: #fff;
+	background-color: #95a5a6;
+  font-size: 15px;
+  margin-bottom: 4px;
+	height: 30px;
+	padding-top: 4px;
+}
+
+.welcome {
+	width: 300px;
+	height: 40vh;
+	margin: 0 auto;
+	padding-left: 5%;
+	padding-right: 5%;
+	border-radius: 0px;
+	text-align: center;
+	background: #fff;
+	font-size: 2.5em;
+	line-height: 95%;
+}
+
+#data {
+	padding-top: 30%;
+}
+
+#data1 {
+	padding-top: 30%;
+}
+
+#data2 {
+	padding-top: 20%;
+}
+
+#login {
+	width: 10vw;
+	height: 10vh;
+	margin: 0 auto;
+	padding-top: 30%;
+	border-radius: 10px;
+	text-align: center;
+}
+
+#loginBtn {
+	background-color: #95a5a6;
+	border: 0px;
+}
+
+#closeWelcome {
+	margin-top: 20px;
+	background-color: #95a5a6;
+	border: 0px;
+}
+
+#noteInput {
+	width: 60%;
+	font-size: 1.2em;
+	line-height: 1.33;
+}
+
+#notesdata {
+	position: fixed !important;
+	position: absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	margin-top: 44px;
+	padding-top: 20px;
+	margin-bottom: 33px;
+	padding-left: 25%;
+	padding-right: 25%;
+	min-width: 350px;
+	z-index: -10;
+	overflow-y: scroll;
+	float: left;
+}
+
+.note {
+	background-color: #fff;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	box-shadow: 0 1px rgba(0,0,0,0.07);
+	margin-bottom: 1px;
+	padding-left: 20px;
+	padding-right: 10px;
+	padding-top: 12px;
+	padding-bottom: 3px;
+	word-wrap: break-word;
+	width: 100%;
+	float: right;
+}
+
+.noteText {
+	font-size:1.2em;
+	text-align:left;
+}
+
+.noteLabel {
+	width: 30px;
+	height: 30px;
+	float: left;
+	margin-top: 0px;
+	margin-left: -60px;
+	border-radius: 20px;
+	margin-bottom: 1%;
+}
+
+.noteAge {
+	float: right;
+	color: #95a5a6;
+}
+
+.users {
+	width: 40px;
+	margin-left: 5px;
+	overflow-y: scroll;
+}
+.users::-webkit-scrollbar {
+	display: none;
+}
+
+#userLabel {
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+	margin-bottom: 5px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #fff;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 0px;
+}
