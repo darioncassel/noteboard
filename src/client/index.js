@@ -112,7 +112,7 @@ if(Meteor.isClient){
 		$('#notesdata').scrollTop($('#notesdata').prop("scrollHeight"));
 	}
 
-	Handlebars.registerHelper('linkify',  function(text){
+	Handlebars.registerHelper('linkify', function(text){
 		var linkedText = Autolinker.link(text, {stripPrefix: false});
 		var url = new RegExp(/<a\b[^>]*>(.*?)<\/a>/g);
 		var str = Handlebars._escape("");
@@ -140,7 +140,7 @@ if(Meteor.isClient){
 			if(Meteor.user()){
 				navigator.geolocation.getCurrentPosition(setLoc);
 				function setLoc(position){
-					Meteor.users.update({_id: Meteor.userId}, {$set: {loc: [position.coords.longitude, position.coords.latitude]}});
+					Meteor.call('updatePosition', Meteor.userId, position);
 				}
 			}
 		}, 600000);

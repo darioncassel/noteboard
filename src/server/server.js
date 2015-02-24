@@ -89,6 +89,9 @@ if(Meteor.isServer) {
     },
     removeAllNotes: function() {
       NotesData.remove({});
+    },
+    updatePosition: function(userId, position){
+      Meteor.users.update({_id: userId}, {$set: {loc: [position.coords.longitude, position.coords.latitude]}});
     }
   });
 
