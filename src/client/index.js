@@ -143,7 +143,10 @@ if(Meteor.isClient){
 					Meteor.users.update({_id: Meteor.userId}, {$set: {loc: [position.coords.longitude, position.coords.latitude]}});
 				}
 			}
-		}, 300000);
+		}, 600000);
+		setInterval(function () {
+  		Meteor.call('keepalive', Meteor.userId);
+		}, 5000);
 	});
 
 	Meteor.startup(function() {

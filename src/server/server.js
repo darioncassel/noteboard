@@ -1,6 +1,7 @@
 //@DarionCassel
 Fiber = Npm.require('fibers');
 NotesData = new Mongo.Collection("notes");
+Connections = new Mongo.Collection("connections");
 
 if(Meteor.isServer) {
 
@@ -80,6 +81,15 @@ if(Meteor.isServer) {
         }
       }).run();
     }, 10000);
+    setInterval(function () {
+      Fiber(function(){
+        var now = (new Date()).getTime();
+        Connections.find({last_seen: {$lt: (now - 60 * 1000)}}).forEach(function (user) {
+          console.log(user);
+          Meteor.users.remove({_id: user.userId});
+        });
+      }).run();
+    }, 10000);
   });
 
   Meteor.methods({
@@ -92,6 +102,9 @@ if(Meteor.isServer) {
     },
     removeAllNotes: function() {
       NotesData.remove({});
+    },
+    keepalive: function (user_id) {
+      Connections.update({id: user_id}, {$set: {last_seen: (new Date()).getTime()}});
     }
   });
 
