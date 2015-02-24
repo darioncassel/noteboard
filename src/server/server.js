@@ -1,7 +1,6 @@
 //@DarionCassel
 Fiber = Npm.require('fibers');
 NotesData = new Mongo.Collection("notes");
-Connections = new Mongo.Collection("connections");
 
 if(Meteor.isServer) {
 
@@ -13,7 +12,6 @@ if(Meteor.isServer) {
         {fields: {'profile.color': 1, 'profile.loc': 1}});
       }else {
         Kadira.trackError('connectFail', 'FAILURE-1');
-        //console.log('FAILURE-1');
       }
     });
     Meteor.publish("Users_near", function() {
@@ -29,7 +27,6 @@ if(Meteor.isServer) {
         }, {fields:{'profile.color':1}});
       }else {
         Kadira.trackError('connectFail', 'FAILURE-2');
-        //console.log('FAILURE-2');
       }
     });
     Meteor.publish("NotesData_near", function() {
@@ -45,7 +42,6 @@ if(Meteor.isServer) {
         }, {sort: {timestamp: 1}});
       }else {
         Kadira.trackError('connectFail', 'FAILURE-3');
-        //console.log('FAILURE-3');
       }
     });
   });
@@ -59,7 +55,7 @@ if(Meteor.isServer) {
   });
 
   Tracker.autorun(function() {
-    setInterval(function() {
+    Meteor.setInterval(function() {
       Fiber(function(){
         var tempArr = NotesData.find().fetch();
         if(tempArr!=[]){
@@ -71,7 +67,7 @@ if(Meteor.isServer) {
         }
       }).run();
     }, 120000);
-    setInterval(function() {
+    Meteor.setInterval(function() {
       Fiber(function(){
         var tempArr = NotesData.find().fetch();
         for(i=0;i<tempArr.length;i++){
@@ -79,15 +75,6 @@ if(Meteor.isServer) {
           if(time<=0){time=0;}
           NotesData.update(tempArr[i]._id, {$set: {age: time}});
         }
-      }).run();
-    }, 10000);
-    setInterval(function () {
-      Fiber(function(){
-        var now = (new Date()).getTime();
-        Connections.find({last_seen: {$lt: (now - 60 * 1000)}}).forEach(function (user) {
-          console.log(user);
-          Meteor.users.remove({_id: user.userId});
-        });
       }).run();
     }, 10000);
   });
@@ -102,9 +89,6 @@ if(Meteor.isServer) {
     },
     removeAllNotes: function() {
       NotesData.remove({});
-    },
-    keepalive: function (user_id) {
-      Connections.update({id: user_id}, {$set: {last_seen: (new Date()).getTime()}});
     }
   });
 

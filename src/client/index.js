@@ -136,7 +136,7 @@ if(Meteor.isClient){
 	}
 
 	Tracker.autorun(function() {
-		setInterval(function() {
+		Meteor.setInterval(function() {
 			if(Meteor.user()){
 				navigator.geolocation.getCurrentPosition(setLoc);
 				function setLoc(position){
@@ -144,9 +144,6 @@ if(Meteor.isClient){
 				}
 			}
 		}, 600000);
-		setInterval(function () {
-  		Meteor.call('keepalive', Meteor.userId);
-		}, 5000);
 	});
 
 	Meteor.startup(function() {
