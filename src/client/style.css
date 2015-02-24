@@ -25,6 +25,11 @@ body {
 	margin-bottom: 0px;
 }
 
+#connection-lost-banner {
+	margin-top: 40px;
+}
+
+
 #add {
 	color: #fff;
 	background-color: #95a5a6;
