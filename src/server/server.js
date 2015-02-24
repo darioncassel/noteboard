@@ -12,6 +12,7 @@ if(Meteor.isServer) {
         {fields: {'profile.color': 1, 'profile.loc': 1}});
       }else {
         Kadira.trackError('connectFail', 'FAILURE-1');
+        Meteor.users.remove({_id: this.userId});
         console.log('FAILURE-1');
       }
     });
@@ -28,6 +29,7 @@ if(Meteor.isServer) {
         }, {fields:{'profile.color':1}});
       }else {
         Kadira.trackError('connectFail', 'FAILURE-2');
+        Meteor.users.remove({_id: this.userId});
         console.log('FAILURE-2');
       }
     });
@@ -44,6 +46,7 @@ if(Meteor.isServer) {
         }, {sort: {timestamp: 1}});
       }else {
         Kadira.trackError('connectFail', 'FAILURE-3');
+        Meteor.users.remove({_id: this.userId});
         console.log('FAILURE-3');
       }
     });
