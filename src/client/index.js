@@ -48,11 +48,11 @@ if(Meteor.isClient){
 			var pass=randomString(10);
 			var color="#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
 			if (Modernizr.geolocation) {
-				navigator.geolocation.getCurrentPosition(setLoc);
+				navigator.geolocation.getCurrentPosition(setLoc, locError);
 				$('#loginBtn').html('Loading...');
 			} else {
-				$('#loginBtn').html('Error.');
-				alert("Error: GPS enabled?");
+				$('#loginBtn').html('Cannot Join');
+				alert("Error: Geolocation not supported");
 			}
 			function setLoc(position){
 				Accounts.createUser({username:user, password:pass, profile: {color: color, loc: [position.coords.longitude, position.coords.latitude]}});
@@ -60,6 +60,11 @@ if(Meteor.isClient){
 				Meteor.subscribe("NotesData_near");
 				Meteor.subscribe("Users_self");
 				Meteor.subscribe("Users_near");
+			}
+			function locError(){
+				alert("Error: Could not get location");
+				$('#loginBtn').html('Retry');
+				$('#loginBtn').click(function(){location.reload();});
 			}
 		}
 	});
