@@ -1,9 +1,9 @@
 //@DarionCassel
 Fiber = Npm.require('fibers');
 NotesData = new Mongo.Collection("notes");
+MsgCount = new Mongo.Collection("count");
 
 if(Meteor.isServer) {
-
   Accounts.onLogin(function() {
     Meteor.publish("Users_self", function() {
       self = this;
@@ -39,7 +39,7 @@ if(Meteor.isServer) {
               $center: [loc, 0.0002699784] //30 meters
             }
           }
-        }, {sort: {timestamp: 1}});
+        }, {sort: {sortPos: 1}});
       }else {
         Kadira.trackError('connectFail', 'FAILURE-3');
       }
@@ -62,6 +62,11 @@ if(Meteor.isServer) {
           for(i=0; i<tempArr.length; i++){
             if(tempArr[i].age!=undefined && tempArr[i].age>59){
               NotesData.remove(tempArr[i]._id);
+              /*new code*/
+              //to prevent the count from increasing monotonically
+              NotesData.update(tempArr[i]._id, {$inc: {sortPos: -1}});
+              MsgCount.update({_id: MsgCount.find().fetch()[0]._id}, {$inc: {pos: -1}});
+              /*new code*/
             }
           }
         }
@@ -80,11 +85,13 @@ if(Meteor.isServer) {
   });
 
   Meteor.methods({
-    addNote: function(text) {
+    addNote: function(note) {
       if(!Meteor.userId()){
         throw new Meteor.Error("not-authorized");
       }else {
-        NotesData.insert(text);
+        MsgCount.update({_id: MsgCount.find().fetch()[0]._id}, {$inc: {pos: 1}});
+        note.sortPos = MsgCount.find().fetch()[0].pos;
+        NotesData.insert(note);
       }
     },
     removeAllNotes: function() {
@@ -98,5 +105,8 @@ if(Meteor.isServer) {
   Meteor.startup(function() {
     Meteor.users._ensureIndex({'profile.loc': "2d" });
     NotesData._ensureIndex({loc: "2d"});
+    if(MsgCount.find().fetch().length==0){
+      MsgCount.insert({pos: 0});
+    }
   });
 }
