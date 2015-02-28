@@ -21,7 +21,7 @@ if(Meteor.isServer) {
         return Meteor.users.find({
           'profile.loc': {
             $geoWithin: {
-              $center: [loc, 0.0002699784] //30 meters
+              $center: [loc, 0.002699784] //300 meters
             }
           }
         }, {fields:{'profile.color':1}});
@@ -36,7 +36,7 @@ if(Meteor.isServer) {
         return NotesData.find({
           loc: {
             $geoWithin: {
-              $center: [loc, 0.0002699784] //30 meters
+              $center: [loc, 0.002699784] //300 meters
             }
           }
         }, {sort: {sortPos: 1}});
