@@ -11,7 +11,7 @@ if(Meteor.isServer) {
         return Meteor.users.find({_id: this.userId},
         {fields: {'profile.color': 1, 'profile.loc': 1}});
       }else {
-        Kadira.trackError('connectFail', 'FAILURE-1');
+        //Kadira.trackError('connectFail', 'FAILURE-1');
       }
     });
     Meteor.publish("Users_near", function() {
@@ -26,7 +26,7 @@ if(Meteor.isServer) {
           }
         }, {fields:{'profile.color':1}});
       }else {
-        Kadira.trackError('connectFail', 'FAILURE-2');
+        //Kadira.trackError('connectFail', 'FAILURE-2');
       }
     });
     Meteor.publish("NotesData_near", function() {
@@ -41,7 +41,7 @@ if(Meteor.isServer) {
           }
         }, {sort: {sortPos: 1}});
       }else {
-        Kadira.trackError('connectFail', 'FAILURE-3');
+        //Kadira.trackError('connectFail', 'FAILURE-3');
       }
     });
   });
